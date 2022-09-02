@@ -1,0 +1,193 @@
+{% load static %} 
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div
+      class="col-lg-12 d-flex justify-content-between mt-2 align-items-center"
+    >
+      <h4 class="text-capitalize breadcrumb-title">Xonalar</h4>
+      <div class="action-btn">
+        <button
+          class="btn btn-primary btn-default btn-squared drawer-trigger mb-10" data-drawer="account" >
+          Xona qo'shish
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 mb-1">
+      <div class="card px-20">
+        <div class="card-body p-1">
+          <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table-rooms-list">
+            <div class="table-responsive">
+            
+              <div id="filter-form-container"></div>
+              <table class="table mb-0 table-borderless adv-table-rooms-list" data-sorting="true" data-filter-container="#filter-form-container" data-paging-current="1" data-paging-position="left" data-paging-size="2">
+                <thead>
+                  <tr class="userDatatable-header">
+                    <th>
+                      <span class="userDatatable-title">id</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Xonalar</span>
+                    </th>
+                    
+                    <th>
+                      <span class="userDatatable-title">Guruhlar</span>
+                    </th> 
+
+                    <th>
+                      <span class="userDatatable-title">Xona sig'imi</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Status</span>
+                    </th>
+                    <th>
+                      <span class="orderDatatable_actions mb-0 d-flex flex-wrap">...</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                 {% for obj in objs %}
+                  <tr
+                    style="
+                    
+                      border-radius: 40px;
+                      padding: 15px;
+                    "
+                  >
+                    <td>
+                      <div class="userDatatable-content">{{forloop.counter}}</div>
+                    </td>
+                    <td>
+                      <div class="d-flex">
+                        <div class="userDatatable-inline-title">
+                          <a href="#" class="text-dark fw-500">
+                            <h6>{{obj.name}}-xona</h6>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="userDatatable-content">{{obj.group}}</div>
+                    </td>
+                    <td>
+                      <div class="userDatatable-content">{{obj.capacity}}</div>
+                    </td>
+
+                    <td>
+                      
+                      {% if obj.status %}
+                      <div class="userDatatable-content d-inline-block">
+                        <span
+                          class="bg-opacity-success color-success rounded-pill userDatatable-content-status active"
+                          >active</span
+                        >
+                      </div>
+                      {% else %}
+                      <div class="userDatatable-content d-inline-block">
+                        <span
+                          class="bg-opacity-warning color-warning rounded-pill userDatatable-content-status active"
+                          >deactivate</span
+                        >
+                      </div>
+                      {% endif %}
+                    </td>
+                    <td>
+                      <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                        <li>
+                          <a href="#" class="view">
+                            <span data-feather="eye"></span
+                          ></a>
+                        </li>
+                        <li>
+                          <a href="#" class="edit">
+                            <span data-feather="edit"></span
+                          ></a>
+                        </li>
+                        <li>
+                          <a href="#" class="remove">
+                            <span data-feather="trash-2"></span
+                          ></a>
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="drawer-basic-wrap">
+    <div class="atbd-drawer drawer-account d-none">
+     <div
+        class="atbd-drawer__header d-flex aling-items-center justify-content-between"
+      >  <h3>Xona qo'shish</h3>
+        <h6 class="drawer-title"></h6>
+        <a href="#" class="btdrawer-close"><i class="la la-times"></i></a>
+      </div>
+      <!-- ends: .atbd-drawer__header -->
+      <div class="atbd-drawer__body">
+        <div class="drawer-content">
+          <div class="drawer-account-form form-basic">
+            <form action="{% url 'rooms' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-row">
+                  <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Xona nomi</label>
+                            <input name="name" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="Nomi">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="a1" class="il-gray fs-14 fw-500 align-center">Xona sig'imi</label>
+                            <input name="capacity" type="text" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="30 ta ">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                          <label for="a1" class="il-gray fs-14 fw-500 align-center">Gruh</label>
+                          <input name="group" type="number" class="form-control ih-medium ip-light radius-xs b-light px-15" id="a1" placeholder="gruh">
+                      </div>
+                  </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="a2" class="il-gray fs-14 fw-500 align-center">Xona rasmi</label>
+                            <input name="files" type="file" class="form-control ih-medium ip-light radius-xs b-light px-15"  accept="image/*" id="a2">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                      <button  type="submit" class="btn btn-primary btn-sm">Saqlash</button>
+                  </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- ends: .atbd-drawer__body -->
+    </div>
+    <!-- ends: .atbd-drawer -->
+</div>
+<div class="overlay-dark"></div>
+<div class="overlay-dark-l2"></div>
+{% endblock %}
+{% block script %}
+<script>
+  var params = new URLSearchParams(window.location.search)
+  if(params.has('success')) {
+    alert("malumotlar qo'shildi")
+  }
+  else if(params.has('error')){
+    alert("Malumotlar to\'liq kiritilmadi")
+  }
+</script>
+{% endblock %}
